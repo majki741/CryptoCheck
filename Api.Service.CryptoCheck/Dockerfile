@@ -5,7 +5,7 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["Api.Service.CryptoCheck/Api.Service.CryptoCheck.csproj", "Api.Service.CryptoCheck/"]
+COPY ["Api.Service.CryptoCheck.csproj", "Api.Service.CryptoCheck/"]
 RUN dotnet restore "Api.Service.CryptoCheck/Api.Service.CryptoCheck.csproj"
 COPY . .
 WORKDIR "/src/Api.Service.CryptoCheck"
