@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: crypto-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: cryptocheck
+  template:
+    metadata:
+      labels:
+        app: cryptocheck
+    spec:
+      containers:
+        - name: cryptocheck
+          image: majki741/api.service.cryptocheck:latest
