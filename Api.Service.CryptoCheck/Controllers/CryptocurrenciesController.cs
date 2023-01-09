@@ -58,7 +58,7 @@ public class CryptocurrenciesController : ControllerBase
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"-->{ex.Data} Error with sent: {ex.Message}");
+            Console.WriteLine($"--> {DateTime.Now.ToString("yyyy-MM-dd HH:mm")} Error with sent: {ex.Message}");
         }
         
         return CreatedAtRoute(nameof(GetCryptocurrencyById), new {id = cryptocurrencyReadDto.CryptoId}, cryptocurrencyReadDto);
