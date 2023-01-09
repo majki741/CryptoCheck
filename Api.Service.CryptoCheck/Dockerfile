@@ -7,8 +7,9 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["Api.Service.CryptoCheck.csproj", "Api.Service.CryptoCheck/"]
 RUN dotnet restore "Api.Service.CryptoCheck/Api.Service.CryptoCheck.csproj"
-COPY . .
+
 WORKDIR "/src/Api.Service.CryptoCheck"
+COPY . .
 RUN dotnet build "Api.Service.CryptoCheck.csproj" -c Release -o /app/build
 
 FROM build AS publish
