@@ -1,31 +1,31 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: crypto-deployment
+  name: mail-deployment
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: cryptocheck
+      app: mailsrv
   template:
     metadata:
       labels:
-        app: cryptocheck
+        app: mailsrv
     spec:
       containers:
-        - name: cryptocheck
-          image: majki741/api.service.cryptocheck:latest
+        - name: mailsrv
+          image: majki741/api.service.mail:latest
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: crypto-clusterip-srv
+  name: mail-clusterip-srv
 spec:
   type: ClusterIP
   selector:
-    app: cryptocheck
+    app: mailsrv
   ports:
-    - name: cryptocheck
+    - name: mailsrv
       protocol: TCP
-      port: 5277
-      targetPort: 5277
+      port: 5278
+      targetPort: 5278
