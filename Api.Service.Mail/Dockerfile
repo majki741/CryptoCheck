@@ -1,14 +1,16 @@
 ﻿FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
 WORKDIR /app
-EXPOSE 80
-EXPOSE 443
+ENV ASPNETCORE_URLS=http://+:5278
+ENV ASPNETCORE_ENVIRONMENT=Development
+EXPOSE 5278
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["Api.Service.Mail/Api.Service.Mail.csproj", "Api.Service.Mail/"]
+COPY ["Api.Service.Mail.csproj", "Api.Service.Mail/"]
 RUN dotnet restore "Api.Service.Mail/Api.Service.Mail.csproj"
-COPY . .
+
 WORKDIR "/src/Api.Service.Mail"
+COPY . .
 RUN dotnet build "Api.Service.Mail.csproj" -c Release -o /app/build
 
 FROM build AS publish
