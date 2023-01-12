@@ -11,9 +11,23 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+Console.WriteLine(builder.Environment.EnvironmentName);
+
+if (builder.Environment.IsDevelopment())
+{
+    Console.WriteLine("Db: InMem");
+    builder.Services.AddDbContext<AppDbContext>(opt =>
+        opt.UseInMemoryDatabase("InMem"));
+}
+else
+{
+    Console.WriteLine("Db: SqlServer");
+    builder.Services.AddDbContext<AppDbContext>(opt =>
+        opt.UseSqlServer(builder.Configuration.GetConnectionString("CryptoConnDb")));
+}
+
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-builder.Services.AddDbContext<AppDbContext>(opt =>
-    opt.UseInMemoryDatabase("InMem"));
+
 
 builder.Services.AddHttpClient<IMailDataClient, HttpMailDataClient>();
 builder.Services.AddScoped<ICryptocurrencyRepo, CryptocurrencyRepo>();
@@ -26,9 +40,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-
-
-PrepDb.PrepPopulation(app);
+PrepDb.PrepPopulation(app, app.Environment.IsDevelopment());
 
 app.UseHttpsRedirection();
 
